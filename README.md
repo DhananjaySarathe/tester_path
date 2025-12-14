@@ -21,11 +21,13 @@ A Next.js website providing a practical guide for startup testers, built with Ty
 ### Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -75,4 +77,3 @@ All components are located in the `components/` directory and follow React best 
 - Server components by default for better performance
 - Proper TypeScript typing
 - Reusable and maintainable code structure
-
