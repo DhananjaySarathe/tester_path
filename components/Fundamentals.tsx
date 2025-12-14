@@ -1,4 +1,12 @@
+'use client'
+
+import { useState } from 'react'
+import Modal from './Modal'
+import { knowledgeData } from '@/data/knowledge'
+
 export default function Fundamentals() {
+  const [openModal, setOpenModal] = useState<string | null>(null)
+
   return (
     <section id="fundamentals" className="py-20 bg-dark-bg relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,20 +20,45 @@ export default function Fundamentals() {
             <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
               <h4 className="font-bold text-xl text-white mb-4">Concepts to Master</h4>
               <ul className="space-y-3 text-slate-400 text-sm">
-                <li className="flex items-center">
-                  <i className="fa-solid fa-layer-group text-blue-400 w-6"></i> SDLC & STLC
-                  (Practical view)
+                <li
+                  className="flex items-center cursor-pointer hover:text-white transition group"
+                  onClick={() => setOpenModal('sdlc')}
+                >
+                  <i className="fa-solid fa-layer-group text-blue-400 w-6"></i>
+                  <span className="group-hover:text-brand-400">SDLC (Practical view)</span>
+                  <i className="fa-solid fa-info-circle text-blue-400 ml-2 text-xs opacity-0 group-hover:opacity-100 transition"></i>
                 </li>
-                <li className="flex items-center">
-                  <i className="fa-solid fa-rotate text-blue-400 w-6"></i> Bug Life Cycle
+                <li
+                  className="flex items-center cursor-pointer hover:text-white transition group"
+                  onClick={() => setOpenModal('stlc')}
+                >
+                  <i className="fa-solid fa-sitemap text-blue-400 w-6"></i>
+                  <span className="group-hover:text-brand-400">STLC (Testing Life Cycle)</span>
+                  <i className="fa-solid fa-info-circle text-blue-400 ml-2 text-xs opacity-0 group-hover:opacity-100 transition"></i>
                 </li>
-                <li className="flex items-center">
-                  <i className="fa-solid fa-triangle-exclamation text-blue-400 w-6"></i> Severity
-                  vs Priority
+                <li
+                  className="flex items-center cursor-pointer hover:text-white transition group"
+                  onClick={() => setOpenModal('bugLifeCycle')}
+                >
+                  <i className="fa-solid fa-rotate text-blue-400 w-6"></i>
+                  <span className="group-hover:text-brand-400">Bug Life Cycle</span>
+                  <i className="fa-solid fa-info-circle text-blue-400 ml-2 text-xs opacity-0 group-hover:opacity-100 transition"></i>
                 </li>
-                <li className="flex items-center">
-                  <i className="fa-solid fa-filter text-blue-400 w-6"></i> Smoke vs Sanity vs
-                  Regression
+                <li
+                  className="flex items-center cursor-pointer hover:text-white transition group"
+                  onClick={() => setOpenModal('severityVsPriority')}
+                >
+                  <i className="fa-solid fa-triangle-exclamation text-blue-400 w-6"></i>
+                  <span className="group-hover:text-brand-400">Severity vs Priority</span>
+                  <i className="fa-solid fa-info-circle text-blue-400 ml-2 text-xs opacity-0 group-hover:opacity-100 transition"></i>
+                </li>
+                <li
+                  className="flex items-center cursor-pointer hover:text-white transition group"
+                  onClick={() => setOpenModal('smokeSanityRegression')}
+                >
+                  <i className="fa-solid fa-filter text-blue-400 w-6"></i>
+                  <span className="group-hover:text-brand-400">Smoke vs Sanity vs Regression</span>
+                  <i className="fa-solid fa-info-circle text-blue-400 ml-2 text-xs opacity-0 group-hover:opacity-100 transition"></i>
                 </li>
               </ul>
               <div className="mt-6 pt-4 border-t border-slate-700">
@@ -46,7 +79,10 @@ export default function Fundamentals() {
               This is what makes developers love you. Clear, concise, impactful.
             </p>
 
-            <div className="bg-white text-slate-900 rounded-lg shadow-2xl overflow-hidden font-mono text-sm relative">
+            <div
+              className="bg-white text-slate-900 rounded-lg shadow-2xl overflow-hidden font-mono text-sm relative cursor-pointer hover:shadow-brand-500/20 transition group"
+              onClick={() => setOpenModal('goodBugReport')}
+            >
               <div className="bg-red-50 p-4 border-b border-red-100 flex justify-between items-center">
                 <span className="font-bold text-red-700">
                   <i className="fa-solid fa-bug mr-2"></i>BUG-402
@@ -104,9 +140,29 @@ export default function Fundamentals() {
                 </div>
               </div>
             </div>
+            <div className="mt-4 text-center">
+              <button
+                onClick={() => setOpenModal('goodBugReport')}
+                className="text-brand-400 hover:text-brand-300 text-sm font-medium flex items-center justify-center gap-2"
+              >
+                <i className="fa-solid fa-circle-info"></i>
+                Learn how to write perfect bug reports
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      {openModal && knowledgeData[openModal] && (
+        <Modal
+          isOpen={true}
+          onClose={() => setOpenModal(null)}
+          title={knowledgeData[openModal].title}
+        >
+          {knowledgeData[openModal].content}
+        </Modal>
+      )}
     </section>
   )
 }

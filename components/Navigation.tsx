@@ -36,6 +36,12 @@ export default function Navigation() {
                 Tech Stack
               </a>
               <a
+                href="#playgrounds"
+                className="hover:text-brand-500 px-3 py-2 rounded-md text-sm font-medium transition"
+              >
+                Playgrounds
+              </a>
+              <a
                 href="#roadmap"
                 className="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-md text-sm font-bold transition"
               >
@@ -80,6 +86,13 @@ export default function Navigation() {
             onClick={() => setMobileMenuOpen(false)}
           >
             Tech Stack
+          </a>
+          <a
+            href="#playgrounds"
+            className="block hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Playgrounds
           </a>
           <a
             href="#roadmap"

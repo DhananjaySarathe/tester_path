@@ -1,4 +1,12 @@
+'use client'
+
+import { useState } from 'react'
+import Modal from './Modal'
+import { knowledgeData } from '@/data/knowledge'
+
 export default function RealityCheck() {
+  const [openModal, setOpenModal] = useState<string | null>(null)
+
   return (
     <section id="reality" className="py-20 bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,7 +68,35 @@ export default function RealityCheck() {
             </ul>
           </div>
         </div>
+
+        {/* Exploratory Testing Section */}
+        <div className="mt-12 text-center">
+          <div
+            className="inline-block glass-card p-6 rounded-2xl border-2 border-brand-500/50 cursor-pointer hover:border-brand-500 transition group"
+            onClick={() => setOpenModal('exploratoryTesting')}
+          >
+            <div className="flex items-center justify-center gap-3">
+              <i className="fa-solid fa-magnifying-glass text-brand-500 text-3xl group-hover:scale-110 transition"></i>
+              <div className="text-left">
+                <h3 className="text-xl font-bold text-white mb-1">Exploratory Testing</h3>
+                <p className="text-slate-400 text-sm">The most important skill for startup testers</p>
+              </div>
+              <i className="fa-solid fa-circle-info text-brand-400 opacity-0 group-hover:opacity-100 transition"></i>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Modal */}
+      {openModal && knowledgeData[openModal] && (
+        <Modal
+          isOpen={true}
+          onClose={() => setOpenModal(null)}
+          title={knowledgeData[openModal].title}
+        >
+          {knowledgeData[openModal].content}
+        </Modal>
+      )}
     </section>
   )
 }
