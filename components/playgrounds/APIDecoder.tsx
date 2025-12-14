@@ -138,15 +138,15 @@ export default function APIDecoder() {
 
   if (!currentCase) {
     return (
-      <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
+      <div className="bg-slate-800 rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-700">
         <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-            <i className="fa-solid fa-trophy text-yellow-400"></i> Great Job!
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 flex items-center justify-center gap-2 flex-wrap">
+            <i className="fa-solid fa-trophy text-yellow-400"></i> <span>Great Job!</span>
           </h3>
-          <p className="text-slate-300 mb-6">You've completed all available cases!</p>
+          <p className="text-slate-300 mb-4 sm:mb-6 text-sm sm:text-base">You've completed all available cases!</p>
           <button
             onClick={resetAll}
-            className="px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition text-sm sm:text-base"
           >
             Start Over
           </button>
@@ -156,23 +156,23 @@ export default function APIDecoder() {
   }
 
   return (
-    <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-          <i className="fa-solid fa-plug text-purple-400"></i> API Response Decoder
+    <div className="bg-slate-800 rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-700">
+      <div className="mb-4 sm:mb-6">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 flex items-center gap-2 flex-wrap">
+          <i className="fa-solid fa-plug text-purple-400"></i> <span>API Response Decoder</span>
         </h3>
-        <p className="text-slate-400 text-sm">
+        <p className="text-slate-400 text-xs sm:text-sm">
           A logic-analysis playground. Check if API behavior is correct — no tools needed.
         </p>
       </div>
 
-      <div className="mb-6">
-        <div className="bg-slate-900 p-6 rounded-lg mb-4 border border-slate-700">
-          <h4 className="text-xl font-bold text-white mb-4">{currentCase.title}</h4>
+      <div className="mb-4 sm:mb-6">
+        <div className="bg-slate-900 p-4 sm:p-6 rounded-lg mb-3 sm:mb-4 border border-slate-700">
+          <h4 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">{currentCase.title}</h4>
           
-          <div className="mb-4">
-            <p className="text-sm text-slate-400 mb-2">Request:</p>
-            <div className="bg-slate-950 p-4 rounded font-mono text-sm">
+          <div className="mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-slate-400 mb-2">Request:</p>
+            <div className="bg-slate-950 p-3 sm:p-4 rounded font-mono text-xs sm:text-sm overflow-x-auto">
               <div className="text-green-400 mb-2">
                 {currentCase.request.method} {currentCase.request.endpoint}
               </div>
@@ -187,16 +187,14 @@ export default function APIDecoder() {
                 </div>
               )}
               {currentCase.request.body && (
-                <pre className="text-slate-300 whitespace-pre-wrap">
-                  {formatBody(currentCase.request.body)}
-                </pre>
+                <pre className="text-slate-300 whitespace-pre-wrap break-words">{formatBody(currentCase.request.body)}</pre>
               )}
             </div>
           </div>
 
           <div>
-            <p className="text-sm text-slate-400 mb-2">Response:</p>
-            <div className="bg-slate-950 p-4 rounded font-mono text-sm">
+            <p className="text-xs sm:text-sm text-slate-400 mb-2">Response:</p>
+            <div className="bg-slate-950 p-3 sm:p-4 rounded font-mono text-xs sm:text-sm overflow-x-auto">
               <div className={`mb-2 ${
                 currentCase.response.status >= 200 && currentCase.response.status < 300
                   ? 'text-green-400'
@@ -206,19 +204,17 @@ export default function APIDecoder() {
               }`}>
                 {currentCase.response.status} {currentCase.response.statusText || ''}
               </div>
-              <pre className="text-slate-300 whitespace-pre-wrap">
-                {formatBody(currentCase.response.body)}
-              </pre>
+              <pre className="text-slate-300 whitespace-pre-wrap break-words">{formatBody(currentCase.response.body)}</pre>
             </div>
           </div>
         </div>
 
-        <div className="bg-blue-900/20 p-4 rounded-lg border border-blue-700 mb-4">
-          <p className="text-white font-semibold mb-3">{currentCase.question}</p>
-          <div className={`grid gap-3 ${
+        <div className="bg-blue-900/20 p-3 sm:p-4 rounded-lg border border-blue-700 mb-3 sm:mb-4">
+          <p className="text-white font-semibold mb-2 sm:mb-3 text-sm sm:text-base">{currentCase.question}</p>
+          <div className={`grid gap-2 sm:gap-3 ${
             currentCase.options.length === 2 ? 'grid-cols-2' : 
-            currentCase.options.length === 3 ? 'grid-cols-3' : 
-            'grid-cols-2 md:grid-cols-4'
+            currentCase.options.length === 3 ? 'grid-cols-1 sm:grid-cols-3' : 
+            'grid-cols-2 sm:grid-cols-2 md:grid-cols-4'
           }`}>
             {currentCase.options.map((option) => {
               const isSelected = selectedAnswer === option.id
@@ -230,7 +226,7 @@ export default function APIDecoder() {
                   key={option.id}
                   onClick={() => !showExplanation && handleAnswer(option.id)}
                   disabled={showExplanation}
-                  className={`p-3 rounded-lg border-2 transition ${
+                  className={`p-2 sm:p-3 rounded-lg border-2 transition text-center ${
                     showResult
                       ? isCorrect
                         ? 'bg-green-900/30 border-green-500 text-green-400'
@@ -240,7 +236,7 @@ export default function APIDecoder() {
                         : 'bg-slate-700 border-slate-600 text-slate-300 hover:border-brand-500 hover:text-brand-400'
                   } ${showExplanation ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}`}
                 >
-                  <span className="font-medium">{option.label}</span>
+                  <span className="font-medium text-xs sm:text-sm break-words">{option.label}</span>
                   {showResult && isCorrect && (
                     <div className="text-xs mt-1 flex items-center gap-1">
                       <i className="fa-solid fa-check text-green-400"></i> Right!
@@ -258,17 +254,17 @@ export default function APIDecoder() {
         </div>
 
         {showExplanation && (
-          <div className="bg-slate-900 p-6 rounded-lg border border-slate-700 space-y-4">
-            <div className="flex items-start gap-3">
-              <div className="text-3xl">
+          <div className="bg-slate-900 p-4 sm:p-6 rounded-lg border border-slate-700 space-y-3 sm:space-y-4">
+            <div className="flex items-start gap-2 sm:gap-3">
+              <div className="text-2xl sm:text-3xl flex-shrink-0">
                 {selectedAnswer === currentCase.correctAnswer ? (
                   <i className="fa-solid fa-circle-check text-green-400"></i>
                 ) : (
                   <i className="fa-solid fa-circle-xmark text-red-400"></i>
                 )}
               </div>
-              <div className="flex-1">
-                <h4 className="text-lg font-bold text-white mb-2">Explanation</h4>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-base sm:text-lg font-bold text-white mb-2">Explanation</h4>
                 
                 {(currentCase.explanation.whyIncorrect || currentCase.explanation.why) && (
                   <div className="bg-slate-800 p-3 rounded mb-3">
@@ -315,30 +311,30 @@ export default function APIDecoder() {
         )}
       </div>
 
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <button
             onClick={resetCase}
-            className="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition"
+            className="px-3 sm:px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition text-sm sm:text-base flex-1 sm:flex-none"
           >
             Reset Current
           </button>
           {remainingCases > 1 && (
             <button
               onClick={nextCase}
-              className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
+              className="px-3 sm:px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition text-sm sm:text-base flex-1 sm:flex-none"
             >
               Next Case
             </button>
           )}
           <button
             onClick={resetAll}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+            className="px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm sm:text-base flex-1 sm:flex-none"
           >
             Start Over
           </button>
         </div>
-        <div className="text-sm text-slate-400">
+        <div className="text-xs sm:text-sm text-slate-400 text-center sm:text-right">
           {remainingCases > 0 ? (
             <>
               Case {currentIndex + 1} of {totalCases} ({remainingCases} remaining)

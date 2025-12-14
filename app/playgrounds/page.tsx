@@ -53,14 +53,14 @@ export default function PlaygroundsPage() {
     <main className="min-h-screen bg-dark-bg">
       <Navigation />
       <div className="pt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-4 px-2">
             Interactive Playgrounds
           </h1>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+          <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg px-4">
             Learn by doing. These 4 playgrounds form a complete tester-thinking loop:
-            <span className="text-brand-400 font-semibold"> Observe → Predict → Analyze → Communicate</span>
+            <span className="text-brand-400 font-semibold block sm:inline"> Observe → Predict → Analyze → Communicate</span>
           </p>
         </div>
 
@@ -71,17 +71,17 @@ export default function PlaygroundsPage() {
               href={`/playgrounds/${playground.id}`}
               className="group"
             >
-              <div className={`bg-gradient-to-br ${playground.gradient} rounded-2xl p-8 border-2 ${playground.borderColor} hover:shadow-2xl transition-all duration-300 transform hover:scale-105 h-full`}>
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="text-5xl">{playground.icon}</div>
-                  <div className="flex-1">
-                    <div className={`${playground.textColor} text-sm font-bold mb-2`}>
+              <div className={`bg-gradient-to-br ${playground.gradient} rounded-2xl p-4 sm:p-6 lg:p-8 border-2 ${playground.borderColor} hover:shadow-2xl transition-all duration-300 transform hover:scale-105 h-full`}>
+                <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="text-3xl sm:text-4xl lg:text-5xl flex-shrink-0">{playground.icon}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className={`${playground.textColor} text-xs sm:text-sm font-bold mb-1 sm:mb-2`}>
                       {playground.step}
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{playground.title}</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 break-words">{playground.title}</h3>
                   </div>
                 </div>
-                <p className="text-slate-300 mb-6">{playground.description}</p>
+                <p className="text-slate-300 mb-4 sm:mb-6 text-sm sm:text-base">{playground.description}</p>
                 <div className="flex items-center justify-between">
                   <span className={`${playground.textColor} font-semibold group-hover:translate-x-2 transition-transform`}>
                     Start Learning →
@@ -95,9 +95,9 @@ export default function PlaygroundsPage() {
           ))}
         </div>
 
-        <div className="bg-slate-800/50 rounded-2xl p-8 border border-slate-700">
-          <h3 className="text-xl font-bold text-white mb-4">How It Works</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-slate-800/50 rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-700">
+          <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">How It Works</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             <div className="text-center">
               <i className="fa-solid fa-bullseye text-brand-400 text-3xl mb-2"></i>
               <p className="text-slate-300 text-sm">Questions are randomly shuffled</p>

@@ -131,15 +131,15 @@ export default function PredictionPlayground() {
 
   if (!currentCase) {
     return (
-      <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
+      <div className="bg-slate-800 rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-700">
         <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-            <i className="fa-solid fa-trophy text-yellow-400"></i> Great Job!
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 flex items-center justify-center gap-2 flex-wrap">
+            <i className="fa-solid fa-trophy text-yellow-400"></i> <span>Great Job!</span>
           </h3>
-          <p className="text-slate-300 mb-6">You've completed all available cases!</p>
+          <p className="text-slate-300 mb-4 sm:mb-6 text-sm sm:text-base">You've completed all available cases!</p>
           <button
             onClick={resetAll}
-            className="px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition text-sm sm:text-base"
           >
             Start Over
           </button>
@@ -149,23 +149,23 @@ export default function PredictionPlayground() {
   }
 
   return (
-    <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-          <i className="fa-solid fa-globe text-blue-400"></i> What Will Happen If...?
+    <div className="bg-slate-800 rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-700">
+      <div className="mb-4 sm:mb-6">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 flex items-center gap-2 flex-wrap">
+          <i className="fa-solid fa-globe text-blue-400"></i> <span>What Will Happen If...?</span>
         </h3>
-        <p className="text-slate-400 text-sm">
+        <p className="text-slate-400 text-xs sm:text-sm">
           A prediction-based thinking simulator. Think like a real (messy) user and predict the outcome.
         </p>
       </div>
 
-      <div className="mb-6">
-        <div className="bg-slate-900 p-6 rounded-lg mb-4 border border-slate-700">
-          <h4 className="text-xl font-bold text-white mb-3">{currentCase.title}</h4>
-          <p className="text-slate-300 text-lg mb-4">{currentCase.scenario}</p>
+      <div className="mb-4 sm:mb-6">
+        <div className="bg-slate-900 p-4 sm:p-6 rounded-lg mb-3 sm:mb-4 border border-slate-700">
+          <h4 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">{currentCase.title}</h4>
+          <p className="text-slate-300 text-base sm:text-lg mb-3 sm:mb-4">{currentCase.scenario}</p>
         </div>
 
-        <div className="space-y-3 mb-4">
+        <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
           {currentCase.options.map((option) => {
             const isSelected = selectedAnswer === option.id
             const isCorrect = option.id === currentCase.correctAnswer
@@ -176,7 +176,7 @@ export default function PredictionPlayground() {
                 key={option.id}
                 onClick={() => !showExplanation && handleAnswer(option.id)}
                 disabled={showExplanation}
-                className={`w-full p-4 rounded-lg border-2 text-left transition ${
+                className={`w-full p-3 sm:p-4 rounded-lg border-2 text-left transition ${
                   showResult
                     ? isCorrect
                       ? 'bg-green-900/30 border-green-500 text-green-400'
@@ -186,15 +186,15 @@ export default function PredictionPlayground() {
                       : 'bg-slate-700 border-slate-600 text-slate-300 hover:border-brand-500 hover:text-brand-400'
                 } ${showExplanation ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}`}
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">{option.label}</span>
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <span className="font-medium text-sm sm:text-base break-words">{option.label}</span>
                   {showResult && isCorrect && (
-                    <span className="text-green-400 font-bold flex items-center gap-1">
+                    <span className="text-green-400 font-bold flex items-center gap-1 text-xs sm:text-sm flex-shrink-0">
                       <i className="fa-solid fa-check"></i> Correct!
                     </span>
                   )}
                   {showResult && !isCorrect && (
-                    <span className="text-red-400 font-bold flex items-center gap-1">
+                    <span className="text-red-400 font-bold flex items-center gap-1 text-xs sm:text-sm flex-shrink-0">
                       <i className="fa-solid fa-xmark"></i> Wrong
                     </span>
                   )}
@@ -205,17 +205,17 @@ export default function PredictionPlayground() {
         </div>
 
         {showExplanation && (
-          <div className="bg-slate-900 p-6 rounded-lg border border-slate-700 space-y-4">
-            <div className="flex items-start gap-3">
-              <div className="text-3xl">
+          <div className="bg-slate-900 p-4 sm:p-6 rounded-lg border border-slate-700 space-y-3 sm:space-y-4">
+            <div className="flex items-start gap-2 sm:gap-3">
+              <div className="text-2xl sm:text-3xl flex-shrink-0">
                 {selectedAnswer === currentCase.correctAnswer ? (
                   <i className="fa-solid fa-circle-check text-green-400"></i>
                 ) : (
                   <i className="fa-solid fa-circle-xmark text-red-400"></i>
                 )}
               </div>
-              <div className="flex-1">
-                <h4 className="text-lg font-bold text-white mb-2">Explanation</h4>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-base sm:text-lg font-bold text-white mb-2">Explanation</h4>
                 
                 <div className="bg-slate-800 p-3 rounded mb-3">
                   <p className="text-blue-400 text-sm font-semibold mb-1">What Happens:</p>
@@ -261,30 +261,30 @@ export default function PredictionPlayground() {
         )}
       </div>
 
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <button
             onClick={resetCase}
-            className="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition"
+            className="px-3 sm:px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition text-sm sm:text-base flex-1 sm:flex-none"
           >
             Reset Current
           </button>
           {remainingCases > 1 && (
             <button
               onClick={nextCase}
-              className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
+              className="px-3 sm:px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition text-sm sm:text-base flex-1 sm:flex-none"
             >
               Next Case
             </button>
           )}
           <button
             onClick={resetAll}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+            className="px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm sm:text-base flex-1 sm:flex-none"
           >
             Start Over
           </button>
         </div>
-        <div className="text-sm text-slate-400">
+        <div className="text-xs sm:text-sm text-slate-400 text-center sm:text-right">
           {remainingCases > 0 ? (
             <>
               Case {currentIndex + 1} of {totalCases} ({remainingCases} remaining)

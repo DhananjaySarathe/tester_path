@@ -49,17 +49,16 @@ export default function PlaygroundPage() {
     <main className="min-h-screen bg-dark-bg">
       <Navigation />
       <div className="pt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="mb-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-10">
+        <div className="mb-4 sm:mb-6">
           <button
             onClick={() => router.push('/playgrounds')}
-            className="flex items-center gap-2 text-slate-400 hover:text-white transition"
+            className="flex items-center gap-2 text-slate-400 hover:text-white transition mb-3 sm:mb-0 text-sm sm:text-base"
           >
             <i className="fa-solid fa-arrow-left"></i>
             <span>Back to Playgrounds</span>
           </button>
-          <h1 className="text-3xl font-bold text-white">{playgroundTitles[playgroundId]}</h1>
-          <div className="w-32"></div>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white break-words">{playgroundTitles[playgroundId]}</h1>
         </div>
         {playgroundComponents[playgroundId]}
       </div>

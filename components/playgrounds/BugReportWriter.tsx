@@ -125,15 +125,15 @@ export default function BugReportWriter() {
 
   if (!currentCase) {
     return (
-      <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
+      <div className="bg-slate-800 rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-700">
         <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-            <i className="fa-solid fa-trophy text-yellow-400"></i> Great Job!
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 flex items-center justify-center gap-2 flex-wrap">
+            <i className="fa-solid fa-trophy text-yellow-400"></i> <span>Great Job!</span>
           </h3>
-          <p className="text-slate-300 mb-6">You've completed all available cases!</p>
+          <p className="text-slate-300 mb-4 sm:mb-6 text-sm sm:text-base">You've completed all available cases!</p>
           <button
             onClick={resetAll}
-            className="px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition text-sm sm:text-base"
           >
             Start Over
           </button>
@@ -143,31 +143,31 @@ export default function BugReportWriter() {
   }
 
   return (
-    <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-          <i className="fa-solid fa-pen-to-square text-green-400"></i> Write the Better Bug
+    <div className="bg-slate-800 rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-700">
+      <div className="mb-4 sm:mb-6">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 flex items-center gap-2 flex-wrap">
+          <i className="fa-solid fa-pen-to-square text-green-400"></i> <span>Write the Better Bug</span>
         </h3>
-        <p className="text-slate-400 text-sm">
+        <p className="text-slate-400 text-xs sm:text-sm">
           A communication improvement playground. Learn how to convert vague complaints into actionable bug reports.
         </p>
       </div>
 
-      <div className="mb-6">
-        <div className="bg-slate-900 p-6 rounded-lg mb-4 border border-slate-700">
-          <h4 className="text-xl font-bold text-white mb-4">{currentCase.title}</h4>
+      <div className="mb-4 sm:mb-6">
+        <div className="bg-slate-900 p-4 sm:p-6 rounded-lg mb-3 sm:mb-4 border border-slate-700">
+          <h4 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">{currentCase.title}</h4>
           
-          <div className="mb-4">
-            <p className="text-sm text-red-400 font-semibold mb-2 flex items-center gap-1">
+          <div className="mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-red-400 font-semibold mb-2 flex items-center gap-1">
               <i className="fa-solid fa-circle-xmark"></i> Bad Bug Report:
             </p>
-            <div className="bg-red-900/20 p-4 rounded border border-red-700">
-              <p className="text-slate-300 italic">"{currentCase.badReport}"</p>
+            <div className="bg-red-900/20 p-3 sm:p-4 rounded border border-red-700">
+              <p className="text-slate-300 italic text-sm sm:text-base break-words">"{currentCase.badReport}"</p>
             </div>
           </div>
 
-          <div className="mb-4">
-            <p className="text-sm text-blue-400 font-semibold mb-2">{currentCase.question}</p>
+          <div className="mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-blue-400 font-semibold mb-2">{currentCase.question}</p>
           </div>
 
           {!showImproved ? (
@@ -176,42 +176,42 @@ export default function BugReportWriter() {
                 setShowImproved(true)
                 markAsShown()
               }}
-              className="w-full px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition font-semibold"
+              className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition font-semibold text-sm sm:text-base"
             >
               <i className="fa-solid fa-arrow-right mr-2"></i>
               Show Improved Version
             </button>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div>
-                <p className="text-sm text-green-400 font-semibold mb-2 flex items-center gap-1">
+                <p className="text-xs sm:text-sm text-green-400 font-semibold mb-2 flex items-center gap-1">
                   <i className="fa-solid fa-circle-check"></i> Improved Version:
                 </p>
-                <div className="bg-green-900/20 p-4 rounded border border-green-700">
-                  <div className="space-y-3">
+                <div className="bg-green-900/20 p-3 sm:p-4 rounded border border-green-700">
+                  <div className="space-y-2 sm:space-y-3">
                     <div>
                       <p className="text-xs text-slate-400 mb-1">Title:</p>
-                      <p className="text-white font-semibold">{currentCase.improvedReport.title}</p>
+                      <p className="text-white font-semibold text-sm sm:text-base break-words">{currentCase.improvedReport.title}</p>
                     </div>
                     <div>
                       <p className="text-xs text-slate-400 mb-1">Steps:</p>
-                      <ol className="list-decimal list-inside space-y-1 text-slate-300 ml-2">
+                      <ol className="list-decimal list-inside space-y-1 text-slate-300 ml-2 text-xs sm:text-sm">
                         {currentCase.improvedReport.steps.map((step, idx) => (
-                          <li key={idx}>{step}</li>
+                          <li key={idx} className="break-words">{step}</li>
                         ))}
                       </ol>
                     </div>
                     <div>
                       <p className="text-xs text-slate-400 mb-1">Expected:</p>
-                      <p className="text-slate-300">{currentCase.improvedReport.expected}</p>
+                      <p className="text-slate-300 text-xs sm:text-sm break-words">{currentCase.improvedReport.expected}</p>
                     </div>
                     <div>
                       <p className="text-xs text-slate-400 mb-1">Actual:</p>
-                      <p className="text-slate-300">{currentCase.improvedReport.actual}</p>
+                      <p className="text-slate-300 text-xs sm:text-sm break-words">{currentCase.improvedReport.actual}</p>
                     </div>
                     <div>
                       <p className="text-xs text-slate-400 mb-1">Impact:</p>
-                      <p className="text-slate-300">{currentCase.improvedReport.impact}</p>
+                      <p className="text-slate-300 text-xs sm:text-sm break-words">{currentCase.improvedReport.impact}</p>
                     </div>
                   </div>
                 </div>
@@ -258,30 +258,30 @@ export default function BugReportWriter() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <button
             onClick={resetCase}
-            className="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition"
+            className="px-3 sm:px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition text-sm sm:text-base flex-1 sm:flex-none"
           >
             Reset Current
           </button>
           {remainingCases > 1 && (
             <button
               onClick={nextCase}
-              className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
+              className="px-3 sm:px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition text-sm sm:text-base flex-1 sm:flex-none"
             >
               Next Case
             </button>
           )}
           <button
             onClick={resetAll}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+            className="px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm sm:text-base flex-1 sm:flex-none"
           >
             Start Over
           </button>
         </div>
-        <div className="text-sm text-slate-400">
+        <div className="text-xs sm:text-sm text-slate-400 text-center sm:text-right">
           {remainingCases > 0 ? (
             <>
               Case {currentIndex + 1} of {totalCases} ({remainingCases} remaining)
