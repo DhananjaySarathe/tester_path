@@ -133,7 +133,9 @@ export default function BugSpottingBoard() {
     return (
       <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
         <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">🎉 Great Job!</h3>
+          <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+            <i className="fa-solid fa-trophy text-yellow-400"></i> Great Job!
+          </h3>
           <p className="text-slate-300 mb-6">You've completed all available cases!</p>
           <button
             onClick={resetAll}
@@ -149,7 +151,9 @@ export default function BugSpottingBoard() {
   return (
     <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
       <div className="mb-6">
-        <h3 className="text-2xl font-bold text-white mb-2">🧪 Bug Spotting Board</h3>
+        <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+          <i className="fa-solid fa-flask text-brand-400"></i> Bug Spotting Board
+        </h3>
         <p className="text-slate-400 text-sm">
           A visual observation playground. Look carefully at the UI and identify what's wrong.
         </p>
@@ -186,10 +190,14 @@ export default function BugSpottingBoard() {
                   {option.icon && <div className="text-2xl mb-1">{option.icon}</div>}
                   <div className="text-xs font-medium">{option.label}</div>
                   {showResult && isCorrect && (
-                    <div className="text-xs mt-1">✓ Correct!</div>
+                    <div className="text-xs mt-1 flex items-center gap-1">
+                      <i className="fa-solid fa-check text-green-400"></i> Correct!
+                    </div>
                   )}
                   {showResult && !isCorrect && (
-                    <div className="text-xs mt-1">✗ Wrong</div>
+                    <div className="text-xs mt-1 flex items-center gap-1">
+                      <i className="fa-solid fa-xmark text-red-400"></i> Wrong
+                    </div>
                   )}
                 </button>
               )
@@ -201,7 +209,11 @@ export default function BugSpottingBoard() {
           <div className="bg-slate-900 p-6 rounded-lg border border-slate-700 space-y-4">
             <div className="flex items-start gap-3">
               <div className="text-3xl">
-                {selectedAnswer === currentCase.correctAnswer ? '✅' : '❌'}
+                {selectedAnswer === currentCase.correctAnswer ? (
+                  <i className="fa-solid fa-circle-check text-green-400"></i>
+                ) : (
+                  <i className="fa-solid fa-circle-xmark text-red-400"></i>
+                )}
               </div>
               <div className="flex-1">
                 <h4 className="text-lg font-bold text-white mb-2">Explanation</h4>

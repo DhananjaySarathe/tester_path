@@ -2,52 +2,63 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
+  
+  // Helper to create navigation links - if not on home, go to home page with hash
+  const getNavLink = (hash: string) => {
+    if (isHomePage) {
+      return hash // Use hash anchor on home page
+    }
+    return `/${hash}` // Go to home page with hash when on other pages
+  }
 
   return (
     <nav className="fixed w-full z-50 glass-card border-b border-slate-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
+          <Link href="/" className="flex items-center">
             <i className="fa-solid fa-bug text-brand-500 text-2xl mr-2"></i>
             <span className="font-bold text-xl text-white tracking-tight">
               Startup<span className="text-brand-500">Tester</span>
             </span>
-          </div>
+          </Link>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a
-                href="#reality"
+              <Link
+                href={getNavLink('#reality')}
                 className="hover:text-brand-500 px-3 py-2 rounded-md text-sm font-medium transition"
               >
                 Expectations
-              </a>
-              <a
-                href="#fundamentals"
+              </Link>
+              <Link
+                href={getNavLink('#fundamentals')}
                 className="hover:text-brand-500 px-3 py-2 rounded-md text-sm font-medium transition"
               >
                 Fundamentals
-              </a>
-              <a
-                href="#tech"
+              </Link>
+              <Link
+                href={getNavLink('#tech')}
                 className="hover:text-brand-500 px-3 py-2 rounded-md text-sm font-medium transition"
               >
                 Tech Stack
-              </a>
+              </Link>
               <Link
                 href="/playgrounds"
                 className="hover:text-brand-500 px-3 py-2 rounded-md text-sm font-medium transition"
               >
                 Playgrounds
               </Link>
-              <a
-                href="#roadmap"
+              <Link
+                href={getNavLink('#roadmap')}
                 className="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-md text-sm font-bold transition"
               >
                 30-Day Plan
-              </a>
+              </Link>
             </div>
           </div>
           <div className="md:hidden">
@@ -67,27 +78,27 @@ export default function Navigation() {
         } md:hidden bg-dark-card border-t border-slate-700`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <a
-            href="#reality"
+          <Link
+            href={getNavLink('#reality')}
             className="block hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             Expectations
-          </a>
-          <a
-            href="#fundamentals"
+          </Link>
+          <Link
+            href={getNavLink('#fundamentals')}
             className="block hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             Fundamentals
-          </a>
-          <a
-            href="#tech"
+          </Link>
+          <Link
+            href={getNavLink('#tech')}
             className="block hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             Tech Stack
-          </a>
+          </Link>
           <Link
             href="/playgrounds"
             className="block hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium"
@@ -95,13 +106,13 @@ export default function Navigation() {
           >
             Playgrounds
           </Link>
-          <a
-            href="#roadmap"
+          <Link
+            href={getNavLink('#roadmap')}
             className="block text-brand-400 hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             30-Day Plan
-          </a>
+          </Link>
         </div>
       </div>
     </nav>

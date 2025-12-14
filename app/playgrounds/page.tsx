@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import Navigation from '@/components/Navigation'
 
 export default function PlaygroundsPage() {
   const playgrounds = [
     {
       id: 'bug-spotting',
       title: 'Bug Spotting Board',
-      icon: '🧪',
+      icon: <i className="fa-solid fa-flask text-brand-400"></i>,
       step: '1. Observe',
       description: 'A visual observation playground. Look carefully at UI components and identify what\'s wrong.',
       color: 'brand',
@@ -16,7 +17,7 @@ export default function PlaygroundsPage() {
     {
       id: 'prediction',
       title: 'What Will Happen If...?',
-      icon: '🌐',
+      icon: <i className="fa-solid fa-globe text-blue-400"></i>,
       step: '2. Predict',
       description: 'A prediction-based thinking simulator. Think like a real user and predict system behavior.',
       color: 'blue',
@@ -27,7 +28,7 @@ export default function PlaygroundsPage() {
     {
       id: 'api-decoder',
       title: 'API Response Decoder',
-      icon: '🔌',
+      icon: <i className="fa-solid fa-plug text-purple-400"></i>,
       step: '3. Analyze',
       description: 'A logic-analysis playground. Check if API behavior is correct — no tools needed.',
       color: 'purple',
@@ -38,7 +39,7 @@ export default function PlaygroundsPage() {
     {
       id: 'bug-report',
       title: 'Write the Better Bug',
-      icon: '📝',
+      icon: <i className="fa-solid fa-pen-to-square text-green-400"></i>,
       step: '4. Communicate',
       description: 'A communication improvement playground. Learn to convert vague complaints into actionable bug reports.',
       color: 'green',
@@ -49,7 +50,9 @@ export default function PlaygroundsPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-dark-bg pt-20">
+    <main className="min-h-screen bg-dark-bg">
+      <Navigation />
+      <div className="pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -96,23 +99,24 @@ export default function PlaygroundsPage() {
           <h3 className="text-xl font-bold text-white mb-4">How It Works</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-3xl mb-2">🎯</div>
+              <i className="fa-solid fa-bullseye text-brand-400 text-3xl mb-2"></i>
               <p className="text-slate-300 text-sm">Questions are randomly shuffled</p>
             </div>
             <div className="text-center">
-              <div className="text-3xl mb-2">📚</div>
+              <i className="fa-solid fa-book text-blue-400 text-3xl mb-2"></i>
               <p className="text-slate-300 text-sm">No duplicate questions shown</p>
             </div>
             <div className="text-center">
-              <div className="text-3xl mb-2">💾</div>
+              <i className="fa-solid fa-floppy-disk text-purple-400 text-3xl mb-2"></i>
               <p className="text-slate-300 text-sm">Progress saved locally</p>
             </div>
             <div className="text-center">
-              <div className="text-3xl mb-2">🔄</div>
+              <i className="fa-solid fa-rotate text-green-400 text-3xl mb-2"></i>
               <p className="text-slate-300 text-sm">Reset anytime to start fresh</p>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </main>
   )

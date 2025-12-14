@@ -1,6 +1,7 @@
 'use client'
 
 import { useParams, useRouter } from 'next/navigation'
+import Navigation from '@/components/Navigation'
 import BugSpottingBoard from '@/components/playgrounds/BugSpottingBoard'
 import PredictionPlayground from '@/components/playgrounds/PredictionPlayground'
 import APIDecoder from '@/components/playgrounds/APIDecoder'
@@ -27,22 +28,27 @@ export default function PlaygroundPage() {
 
   if (!playgroundComponents[playgroundId]) {
     return (
-      <div className="min-h-screen bg-dark-bg pt-20 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Playground Not Found</h1>
-          <button
-            onClick={() => router.push('/playgrounds')}
-            className="px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
-          >
-            Back to Playgrounds
-          </button>
+      <main className="min-h-screen bg-dark-bg">
+        <Navigation />
+        <div className="pt-20 flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-white mb-4">Playground Not Found</h1>
+            <button
+              onClick={() => router.push('/playgrounds')}
+              className="px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
+            >
+              Back to Playgrounds
+            </button>
+          </div>
         </div>
-      </div>
+      </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-dark-bg pt-20">
+    <main className="min-h-screen bg-dark-bg">
+      <Navigation />
+      <div className="pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-6 flex items-center justify-between">
           <button
@@ -56,6 +62,7 @@ export default function PlaygroundPage() {
           <div className="w-32"></div>
         </div>
         {playgroundComponents[playgroundId]}
+      </div>
       </div>
     </main>
   )
