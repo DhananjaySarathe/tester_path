@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -35,12 +36,12 @@ export default function Navigation() {
               >
                 Tech Stack
               </a>
-              <a
-                href="#playgrounds"
+              <Link
+                href="/playgrounds"
                 className="hover:text-brand-500 px-3 py-2 rounded-md text-sm font-medium transition"
               >
                 Playgrounds
-              </a>
+              </Link>
               <a
                 href="#roadmap"
                 className="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-md text-sm font-bold transition"
@@ -87,13 +88,13 @@ export default function Navigation() {
           >
             Tech Stack
           </a>
-          <a
-            href="#playgrounds"
+          <Link
+            href="/playgrounds"
             className="block hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             Playgrounds
-          </a>
+          </Link>
           <a
             href="#roadmap"
             className="block text-brand-400 hover:bg-slate-700 px-3 py-2 rounded-md text-base font-medium"

@@ -1,23 +1,149 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { bugSpottingCases } from '@/data/playgrounds'
 
+const STORAGE_KEY = 'bug-spotting-shown'
+const STORAGE_INDEX_KEY = 'bug-spotting-index'
+const STORAGE_SHUFFLED_KEY = 'bug-spotting-shuffled'
+
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
 export default function BugSpottingBoard() {
-  const [selectedCase, setSelectedCase] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [showExplanation, setShowExplanation] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [shuffledCases, setShuffledCases] = useState<typeof bugSpottingCases>([])
 
-  const currentCase = bugSpottingCases[selectedCase]
+  // Initialize shuffled array and load from localStorage
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const savedShuffledIds = localStorage.getItem(STORAGE_SHUFFLED_KEY)
+    const savedIndex = localStorage.getItem(STORAGE_INDEX_KEY)
+    const shownIds = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+
+    let shuffled: typeof bugSpottingCases
+    let index = 0
+
+    if (savedShuffledIds && savedIndex !== null) {
+      // Restore shuffled order from IDs
+      const shuffledIds = JSON.parse(savedShuffledIds)
+      shuffled = shuffledIds.map((id: string) => 
+        bugSpottingCases.find(c => c.id === id)
+      ).filter(Boolean) as typeof bugSpottingCases
+      index = parseInt(savedIndex, 10)
+      
+      // If we've shown all cases, reset
+      if (shownIds.length >= bugSpottingCases.length) {
+        shuffled = shuffleArray(bugSpottingCases)
+        localStorage.setItem(STORAGE_KEY, '[]')
+        localStorage.setItem(STORAGE_SHUFFLED_KEY, JSON.stringify(shuffled.map(c => c.id)))
+        index = 0
+      } else {
+        // Find next unshown case
+        while (index < shuffled.length && shownIds.includes(shuffled[index]?.id)) {
+          index++
+        }
+        // If we've reached the end but not all are shown, reset
+        if (index >= shuffled.length) {
+          shuffled = shuffleArray(bugSpottingCases)
+          localStorage.setItem(STORAGE_KEY, '[]')
+          localStorage.setItem(STORAGE_SHUFFLED_KEY, JSON.stringify(shuffled.map(c => c.id)))
+          index = 0
+        }
+      }
+    } else {
+      // First time - create new shuffled array
+      shuffled = shuffleArray(bugSpottingCases)
+      localStorage.setItem(STORAGE_SHUFFLED_KEY, JSON.stringify(shuffled.map(c => c.id)))
+    }
+
+    setShuffledCases(shuffled)
+    setCurrentIndex(index)
+    localStorage.setItem(STORAGE_INDEX_KEY, index.toString())
+  }, [])
+
+  const currentCase = shuffledCases[currentIndex]
+  const remainingCases = shuffledCases.length - currentIndex
+  const totalCases = bugSpottingCases.length
 
   const handleAnswer = (answerId: string) => {
     setSelectedAnswer(answerId)
     setShowExplanation(true)
+    
+    // Mark this case as shown
+    if (currentCase && typeof window !== 'undefined') {
+      const shownIds = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+      if (!shownIds.includes(currentCase.id)) {
+        shownIds.push(currentCase.id)
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(shownIds))
+      }
+    }
   }
 
   const resetCase = () => {
     setSelectedAnswer(null)
     setShowExplanation(false)
+  }
+
+  const nextCase = () => {
+    const shownIds = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+    let newIndex = currentIndex + 1
+    
+    // Skip already shown cases
+    while (newIndex < shuffledCases.length && shownIds.includes(shuffledCases[newIndex]?.id)) {
+      newIndex++
+    }
+    
+    // If we've shown all cases, reset
+    if (newIndex >= shuffledCases.length || shownIds.length >= bugSpottingCases.length) {
+      resetAll()
+      return
+    }
+    
+    setCurrentIndex(newIndex)
+    localStorage.setItem(STORAGE_INDEX_KEY, newIndex.toString())
+    resetCase()
+  }
+
+  const resetAll = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(STORAGE_KEY)
+      localStorage.removeItem(STORAGE_INDEX_KEY)
+      localStorage.removeItem(STORAGE_SHUFFLED_KEY)
+      const newShuffled = shuffleArray(bugSpottingCases)
+      setShuffledCases(newShuffled)
+      setCurrentIndex(0)
+      localStorage.setItem(STORAGE_SHUFFLED_KEY, JSON.stringify(newShuffled.map(c => c.id)))
+      localStorage.setItem(STORAGE_INDEX_KEY, '0')
+      resetCase()
+    }
+  }
+
+  if (!currentCase) {
+    return (
+      <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
+        <div className="text-center">
+          <h3 className="text-2xl font-bold text-white mb-4">🎉 Great Job!</h3>
+          <p className="text-slate-300 mb-6">You've completed all available cases!</p>
+          <button
+            onClick={resetAll}
+            className="px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
+          >
+            Start Over
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -124,28 +250,37 @@ export default function BugSpottingBoard() {
         )}
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div className="flex gap-3">
           <button
             onClick={resetCase}
             className="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition"
           >
-            Reset
+            Reset Current
           </button>
-          {bugSpottingCases.length > 1 && (
+          {remainingCases > 1 && (
             <button
-              onClick={() => {
-                setSelectedCase((prev) => (prev + 1) % bugSpottingCases.length)
-                resetCase()
-              }}
+              onClick={nextCase}
               className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition"
             >
               Next Case
             </button>
           )}
+          <button
+            onClick={resetAll}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+          >
+            Start Over
+          </button>
         </div>
         <div className="text-sm text-slate-400">
-          Case {selectedCase + 1} of {bugSpottingCases.length}
+          {remainingCases > 0 ? (
+            <>
+              Case {currentIndex + 1} of {totalCases} ({remainingCases} remaining)
+            </>
+          ) : (
+            <>All cases completed!</>
+          )}
         </div>
       </div>
     </div>
